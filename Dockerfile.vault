@@ -1,0 +1,24 @@
+# Use an appropriate base image
+FROM hashicorp/vault:latest
+
+
+
+# Install netcat for checking port availability
+RUN apk add --no-cache netcat-openbsd jq
+
+# Copy the initialization script into the container
+COPY init-vault.sh /init-vault.sh
+COPY apply-policies.sh /apply-policies.sh
+#COPY kv-policy.hcl /vault/
+
+# Copy your Vault configuration file and .env file if needed
+COPY /vault/config/vault-config.hcl /vault/
+COPY .env /.env
+
+# Make the script executable
+RUN chmod +x /init-vault.sh /apply-policies.sh
+
+# Set the entrypoint to your script
+ENTRYPOINT ["/init-vault.sh"]
+
+

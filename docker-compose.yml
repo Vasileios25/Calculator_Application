@@ -2,25 +2,39 @@ version: '3.8'
 
 services:
   postgres-db:
-    image: "postgres:13-alpine"
+    image: "postgres:13"
     container_name: postgres-container
     expose:
       - 5432
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: my_db
-
+      POSTGRES_USER: ${POSTGRES_USER:?err}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
+      POSTGRES_DB: ${POSTGRES_DB:?err}
     volumes:
-
-
       - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
       -  my_volume:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
       - my-network
+
+  vault:
+    build: 
+      context: .
+      dockerfile: Dockerfile.vault
+    container_name: vault
+    network_mode: host  # Use host networking for this service
+    environment:
+      VAULT_ADDR: 'http://127.0.0.1:8200'
+      VAULT_TOKEN: ${VAULT_TOKEN:?err}
+    volumes:
+      - ./vault/config/vault-config.hcl:/vault/config/vault-config.hcl
+      - /.env:/vault/passwords
+      - /apply-policies.sh:/vault/
+        #- /kv-policy.hcl:/vault/policies/
+
+
   python-app:
     restart: always
     build:
