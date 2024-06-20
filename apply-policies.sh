@@ -39,7 +39,7 @@ while IFS='=' read -r key value; do
 done < .env
 
 # Apply the kv policy
-vault policy write kv-policy /vault/policies/kv-policy.hcl
+#vault policy write kv-policy /vault/policies/kv-policy.hcl
 
 echo "Vault policies applied successfully."
 # List secrets at the my_data/env/ path
