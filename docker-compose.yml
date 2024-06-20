@@ -18,9 +18,8 @@ services:
       - "5432:5432"
     networks:
       - my-network
-
   vault:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile.vault
     container_name: vault
@@ -35,6 +34,7 @@ services:
         #- /kv-policy.hcl:/vault/policies/
 
 
+
   python-app:
     restart: always
     build:
@@ -47,6 +47,7 @@ services:
     stdin_open: true
     tty: true
     command: sh
+    entrypoint: ["/wait-for-it.sh", "postgres-db","5432","--","python3", "/Calculator.py"]
 
     networks:
       - my-network

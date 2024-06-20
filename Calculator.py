@@ -23,7 +23,7 @@ try:
     id_query = "Select * from Calculator order by id desc limit 1"
     mycursor.execute(id_query)
     conn.commit()
-    result = mycursor.fetchone();
+    result = mycursor.fetchone()
     last_entry = list(result)
     print(last_entry)
     new_list = last_entry.copy()
@@ -38,59 +38,61 @@ except TypeError:
 
 
 while True:
+    try:
+        user_input = (int(input(
+                "1 for Addition \n2 for Subtraction\n3 for Multiplication\n4 for Division\n5 for Square power\n6 to quit\nPlease choose one of the above: ")))
+            #print("You entered:", user_input)
+        if user_input != 6 and user_input != 5:
+            first_number = (float(input("Please give the first number: ")))
+            second_number = (float(input("Please give the second number: ")))
+        elif user_input == 5:
+            number = (float(input("Please give number: ")))
 
-    user_input = (int(input(
-            "1 for Addition \n2 for Subtraction\n3 for Multiplication\n4 for Division\n5 for Square power\n6 to quit\nPlease choose one of the above: ")))
-        #print("You entered:", user_input)
-    if user_input != 6 and user_input != 5:
-        first_number = (float(input("Please give the first number: ")))
-        second_number = (float(input("Please give the second number: ")))
-    elif user_input == 5:
-        number = (float(input("Please give number: ")))
+            # main program to calculate the given numbers
+        if user_input == 1:
+            print("You have selected to do Addition")
+            final = float(first_number) + float(second_number)
+            Addition += 1
+            new_list[1] += 1
+            print("The result of the Addition is {:.2f}".format(final))
+            continue
+        elif user_input == 2:
+            final = float(first_number) - float(second_number)
+            Subtraction = Subtraction + 1
+            new_list[2] += 1
+            print("The result of the Subtraction is {:.2f}".format(final))
+            print(f"You have chosen {Subtraction} time/times the Subscription")
 
-        # main program to calculate the given numbers
-    if user_input == 1:
-        print("You have selected to do Addition")
-        final = float(first_number) + float(second_number)
-        Addition += 1
-        new_list[1] += 1
-        print("The result of the Addition is {:.2f}".format(final))
-        continue
-    elif user_input == 2:
-        final = float(first_number) - float(second_number)
-        Subtraction = Subtraction + 1
-        new_list[2] += 1
-        print("The result of the Subtraction is {:.2f}".format(final))
-        print(f"You have chosen {Subtraction} time/times the Subscription")
-
-    elif user_input == 3:
-        final = float(first_number) * float(second_number)
-        Multiplication = Multiplication + 1
-        new_list[3] += 1
-        print("The result of the Multiplication is {:.2f}".format(final))
-        print(f"You have chosen {Multiplication} time/times the Multiplication")
-        continue
-    elif user_input == 4:
-        try:
-            final = float(first_number) / float(second_number)
-            Division = Division + 1
-            new_list[4] += 1
-            print("The result of the Division is {:.2f}".format(final))
-            print(f"You have chosen {Division} time/times the Division")
-        except ZeroDivisionError:
-            final = 0
+        elif user_input == 3:
+            final = float(first_number) * float(second_number)
+            Multiplication = Multiplication + 1
+            new_list[3] += 1
+            print("The result of the Multiplication is {:.2f}".format(final))
+            print(f"You have chosen {Multiplication} time/times the Multiplication")
+            continue
+        elif user_input == 4:
+            try:
+                final = float(first_number) / float(second_number)
+                Division = Division + 1
+                new_list[4] += 1
+                print("The result of the Division is {:.2f}".format(final))
+                print(f"You have chosen {Division} time/times the Division")
+            except ZeroDivisionError:
+                final = 0
             print(f"The result division by zero is {final}")
             continue
-    elif user_input == 5:
-        final = float(pow(number, 2))
-        Square_power = Square_power + 1
-        new_list[5] += 1
-        print(f"The result of the Power {number}" + " is {:.2f}".format(final))
-        print(f"You have chosen {Square_power} time/times the Square_power")
+        elif user_input == 5:
+            final = float(pow(number, 2))
+            Square_power = Square_power + 1
+            new_list[5] += 1
+            print(f"The result of the Power {number}" + " is {:.2f}".format(final))
+            print(f"You have chosen {Square_power} time/times the Square_power")
 
-    elif user_input == 6:
-        break
-
+        elif user_input == 6:
+            break
+    except ValueError:
+        print("Invalid input, please try again")
+        continue
 
 id = id + 1
 new_list[0] += 1
