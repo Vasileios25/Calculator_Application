@@ -1,7 +1,7 @@
 
 # Calculator Application
 
-This project is a Python-based calculator application running inside a Dockerized environment with three containers:
+The project is a Python-based calculator application running inside a Dockerized environment with three containers:
 1. **Python Application**: Handles user input and performs basic arithmetic operations.
 2. **PostgreSQL**: Stores calculation statistics and tracks how many times each operation is performed.
 3. **Vault**: Manages and securely stores database credentials.
@@ -225,7 +225,40 @@ Run the application using:
 docker-compose up
 ```
 
-Once the app is running, follow the prompts to perform mathematical operations.
+Once the app is running, run in other terminal:
+```bash
+docker container ls
+```
+
+connect to python app to run the python script and the same for the other containers:
+```bash
+docker exec -t <container> /bin/bash
+```
+
+to connect to to postgresql run the following:
+```bash
+psql -U <name>
+```
+
+List available databases:
+```bash
+\l
+```
+
+Switch connection to a new database:
+```bash
+\c dbname
+```
+
+List available tables:
+```bash
+\dt
+```
+
+Describe a table such as a column, type, modifiers of columns, etc.:
+```bash
+\d table_name
+```
 
 ## Help
 
@@ -238,26 +271,16 @@ docker-compose logs
 
 Contributors names and contact info
 
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
+ex. Vasilhs S.  
+
 
 ## Version History
 
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
-* 0.1
-    * Initial Release
+
 
 ## License
 
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
 
 ## Acknowledgments
 
-Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+
