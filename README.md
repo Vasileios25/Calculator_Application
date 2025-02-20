@@ -197,6 +197,18 @@ This service runs a **Python script** that connects to the database and performs
 
 This script is designed to wait for a PostgreSQL server to become available before executing a command. It's commonly used in Docker container setups, where the Python application or other services may depend on a PostgreSQL database being up and ready.
 
+---
+
+### **1.Assign Variables:**
+```bash
+host="$1"
+port="$2"
+shift 2
+cmd="$@"
+```
+
+### **1.Assign Variables:**
+
 
 ## Getting Started
 
