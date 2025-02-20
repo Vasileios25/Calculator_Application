@@ -1,11 +1,32 @@
 # Calculator_Application
 
+• Python Calculator that take input from customer in order to choose mathematics calculation(Division, abstraction etc), choose 2 numbers and give output
 
-Simple overview of use/purpose.
+• How much time each run will be written at postgress table
+
+• vault container will handle the db credentials, pending the connection of python code to vault in order to take the credentials
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+This Python script implements a simple calculator that allows users to perform basic arithmetic operations. It keeps track of how many times each operation is performed and stores these statistics in both a CSV file and a PostgreSQL database.
+1. Initial Setup
+• The script imports necessary libraries:
+  • math.pow for exponentiation (square power calculation).
+  • psycopg2 for connecting to a PostgreSQL database.
+  • csv for handling CSV file operations.
+• Initializes counter variables to keep track of how many times each operation is performed (Addition, Subtraction, Multiplication, Division, Square_power).
+• Initializes an id variable to track unique entries in the database.
+
+2. Connecting to the PostgreSQL Database
+• Establishes a connection to a PostgreSQL database named my_db using credentials(in later implementation creds will exclusively retrieved by Hashicorp Vault)
+• Creates a cursor object to execute SQL queries.(A cursor object in PostgreSQL [and databases in general] is an interface that allows you to execute SQL queries and interact with the database through Python.)
+
+3. Retrieving Previous Data from Database
+• The script attempts to fetch the last entry from the Calculator table using:
+```
+SELECT * FROM Calculator ORDER BY id DESC LIMIT 1;
+```
+•
 
 ## Getting Started
 
