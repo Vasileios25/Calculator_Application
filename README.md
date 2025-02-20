@@ -10,6 +10,7 @@
 ## Description
 
 This Python script implements a simple calculator that allows users to perform basic arithmetic operations. It keeps track of how many times each operation is performed and stores these statistics in both a CSV file and a PostgreSQL database.
+
 1. Initial Setup
 • The script imports necessary libraries:
   • math.pow for exponentiation (square power calculation).
@@ -49,9 +50,7 @@ SELECT * FROM Calculator ORDER BY id DESC LIMIT 1;
    4 for Division
    5 for Square power
    6 to quit
-
   ```
-
 • If the user chooses an operation other than 6 (exit) and 5 (square power), they are asked for two numbers. 
 • If the user chooses 5, only one number is needed.
 • Based on user input, the corresponding mathematical operation is performed:
@@ -88,7 +87,82 @@ SELECT * FROM Calculator ORDER BY id DESC LIMIT 1;
   ```
    INSERT INTO Calculator VALUES (%s, %s, %s, %s, %s, %s);
   ```
-  
+ • Uses executemany() to insert multiple rows if needed.
+
+9. Closing the Database Connection
+    • Commits the changes and closes the database connection.
+    • Prints "Thanks" to indicate that the program has successfully completed execution.
+
+Docker Compose File Explanation
+
+This Docker Compose (docker-compose.yml) file sets up a multi-container environment with:
+  1.PostgreSQL Database (postgres-db)
+  2.Vault Service (vault) for secrets management
+  3.Python Application (python-app), which interacts with the database
+
+
+Services
+1. PostgreSQL Database (postgres-db)
+
+This service runs a PostgreSQL 13 database inside a Docker container.
+  • Image: Uses the official PostgreSQL 13 image.
+  • Container Name: postgres-container
+  • Exposed Ports: Internally exposes port 5432 (default PostgreSQL port).
+  • Environment Variables: Loads database credentials from .env variables.
+  • Volumes:
+    • init_db.sql: Runs an SQL script at startup to create the table calculator:
+     ```
+      CREATE TABLE IF NOT EXISTS Calculator(
+       id integer,
+       addition integer,
+       substraction integer,
+       multiplication integer,
+       division integer,
+       square   integer
+
+  );
+    ```
+    • my_volume: Stores database data persistently.
+  • Restart Policy: Always restarts the container if it stops.
+  • Network: Connects to my-network for communication with other services.
+
+2. Vault (vault)
+
+This service runs HashiCorp Vault, used for securely storing and managing secrets.
+
+    Build Context: Uses a custom Dockerfile.vault to build the container.
+    Container Name: vault
+    Network Mode: Uses the host network (directly binds to the host’s network stack).
+    Environment Variables:
+        VAULT_ADDR: Specifies the Vault server address.
+        VAULT_TOKEN: Uses an environment variable for authentication.
+    Volumes:
+        Mounts the Vault configuration file (vault-config.hcl).
+        Mounts a .env file to store passwords.
+        apply-policies.sh: Script for applying security policies.
+        (Optional): kv-policy.hcl can be added for Vault policy configuration.
+
+3. Python Application (python-app)
+
+This service runs a Python script that connects to the database and performs calculations.
+
+    Restart Policy: Always restarts the app if it crashes.
+    Build Context: Uses the default Dockerfile to build the Python environment.
+    Container Name: python-app-container
+    Dependencies: Waits for postgres-db to be ready before starting.
+    Command & Entry Point:
+        Uses wait-for-it.sh to ensure the database is up before running Calculator.py.
+        Executes the Python script (Calculator.py) after confirming PostgreSQL is available.
+    Network: Connects to my-network for database communication.
+
+Networks
+
+    my-network: A bridge network for communication between the postgres-db and python-app.
+
+Volumes
+
+    my_volume: Stores PostgreSQL data persistently to prevent data loss when the container restarts.
+
 ## Getting Started
 
 ### Dependencies
