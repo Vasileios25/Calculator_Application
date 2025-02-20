@@ -1,10 +1,11 @@
 # Calculator_Application
+• Docker implementation, 3 containers, Vault,Python,PostgreSQL.
 
-• Python Calculator that take input from customer in order to choose mathematics calculation(Division, abstraction etc), choose 2 numbers and give output
+• Python Calculator that take input from customer in order to choose mathematics calculation(Division, abstraction etc), choose 2 numbers and give output.
 
-• How much time each run will be written at postgress table
+• How many times each run will be written at postgress table.
 
-• vault container will handle the db credentials, pending the connection of python code to vault in order to take the credentials
+• vault container will handle the db credentials, pending the connection of python code to vault in order to take the credentials.
 
 ## Description
 
@@ -26,8 +27,68 @@ This Python script implements a simple calculator that allows users to perform b
 ```
 SELECT * FROM Calculator ORDER BY id DESC LIMIT 1;
 ```
-•
+• If data exists:
+  • The last record is retrieved and stored as a list (new_list).
 
+• If no previous data is found (TypeError occurs):
+  • A new list [0, 0, 0, 0, 0, 0] is initialized, representing:
+  1.Entry ID
+  2.Addition count
+  3.Subtraction count
+  4.Multiplication count
+  5.Division count
+  6.Square power count
+
+4. User Interaction and Calculator Operations
+
+• The script enters a loop where it continuously prompts the user for a mathematical operation:
+  ```
+   1 for Addition
+   2 for Subtraction
+   3 for Multiplication
+   4 for Division
+   5 for Square power
+   6 to quit
+
+  ```
+
+• If the user chooses an operation other than 6 (exit) and 5 (square power), they are asked for two numbers. 
+• If the user chooses 5, only one number is needed.
+• Based on user input, the corresponding mathematical operation is performed:
+  • Addition (1): first_number + second_number
+  • Subtraction (2): first_number - second_number
+  • Multiplication (3): first_number * second_number
+  • Division (4): first_number / second_number
+    • Handles division by zero and sets the result to 0 if an error occurs.
+  • Square Power (5): Uses math.pow(number, 2).
+• Operation counters are incremented, and the new_list is updated to reflect the new statistics.
+
+
+5. Handling Errors
+• The script includes exception handling for:
+  • Invalid input: If the user enters a non-numeric value, it prompts them to try again.
+  • Zero division: If division by zero is attempted, it prints an error message and sets the result to 0.
+
+6. Updating Statistics
+• After the user exits (6 is chosen), the program:
+  • Increments the entry ID (id += 1).
+  • Prints a summary of how many times each operation was used.
+
+7. Writing Data to CSV
+• The script creates a Statistics.csv file and writes the updated statistics:
+  ```
+  with open('Statistics.csv', 'w', newline='') as csvfile:
+    my_writer = csv.writer(csvfile, delimiter=',')
+    my_writer.writerow(input_variable)
+  ```
+• Reads back the CSV data and stores it in a list (all_value).
+
+8. Storing Data in PostgreSQL
+• The script inserts the updated statistics into the Calculator table using the SQL query:
+  ```
+   INSERT INTO Calculator VALUES (%s, %s, %s, %s, %s, %s);
+  ```
+  
 ## Getting Started
 
 ### Dependencies
