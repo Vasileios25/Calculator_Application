@@ -193,6 +193,11 @@ This service runs a **Python script** that connects to the database and performs
 
 ---
 
+## wait-for-it
+
+This script is designed to wait for a PostgreSQL server to become available before executing a command. It's commonly used in Docker container setups, where the Python application or other services may depend on a PostgreSQL database being up and ready.
+
+
 ## Getting Started
 
 ### Dependencies
