@@ -104,7 +104,7 @@ This Docker Compose (docker-compose.yml) file sets up a multi-container environm
 Services
 1. PostgreSQL Database (postgres-db)
 
-This service runs a PostgreSQL 13 database inside a Docker container.
+  This service runs a PostgreSQL 13 database inside a Docker container.
   • Image: Uses the official PostgreSQL 13 image.
   • Container Name: postgres-container
   • Exposed Ports: Internally exposes port 5432 (default PostgreSQL port).
@@ -142,24 +142,21 @@ This service runs HashiCorp Vault, used for securely storing and managing secret
 
 3. Python Application (python-app)
 
-This service runs a Python script that connects to the database and performs calculations.
-
-    Restart Policy: Always restarts the app if it crashes.
-    Build Context: Uses the default Dockerfile to build the Python environment.
-    Container Name: python-app-container
-    Dependencies: Waits for postgres-db to be ready before starting.
-    Command & Entry Point:
-        Uses wait-for-it.sh to ensure the database is up before running Calculator.py.
-        Executes the Python script (Calculator.py) after confirming PostgreSQL is available.
-    Network: Connects to my-network for database communication.
+  This service runs a Python script that connects to the database and performs calculations.
+    • Restart Policy: Always restarts the app if it crashes.
+    • Build Context: Uses the default Dockerfile to build the Python environment.
+    • Container Name: python-app-container
+    • Dependencies: Waits for postgres-db to be ready before starting.
+    • Command & Entry Point:
+        • Uses wait-for-it.sh to ensure the database is up before running Calculator.py.
+        • Executes the Python script (Calculator.py) after confirming PostgreSQL is available.
+    • Network: Connects to my-network for database communication.
 
 Networks
-
-    my-network: A bridge network for communication between the postgres-db and python-app.
+ • my-network: A bridge network for communication between the postgres-db and python-app.
 
 Volumes
-
-    my_volume: Stores PostgreSQL data persistently to prevent data loss when the container restarts.
+ • my_volume: Stores PostgreSQL data persistently to prevent data loss when the container restarts.
 
 ## Getting Started
 
