@@ -119,8 +119,7 @@ This service runs a PostgreSQL 13 database inside a Docker container.
        multiplication integer,
        division integer,
        square   integer
-
-  );
+);
     ```
     • my_volume: Stores database data persistently.
   • Restart Policy: Always restarts the container if it stops.
@@ -129,12 +128,11 @@ This service runs a PostgreSQL 13 database inside a Docker container.
 2. Vault (vault)
 
 This service runs HashiCorp Vault, used for securely storing and managing secrets.
-
-    Build Context: Uses a custom Dockerfile.vault to build the container.
-    Container Name: vault
-    Network Mode: Uses the host network (directly binds to the host’s network stack).
-    Environment Variables:
-        VAULT_ADDR: Specifies the Vault server address.
+  • Build Context: Uses a custom Dockerfile.vault to build the container.
+  • Container Name: vault
+  • Network Mode: Uses the host network (directly binds to the host’s network stack).
+  • Environment Variables:
+        • ```VAULT_ADDR``` : Specifies the Vault server address.
         VAULT_TOKEN: Uses an environment variable for authentication.
     Volumes:
         Mounts the Vault configuration file (vault-config.hcl).
