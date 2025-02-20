@@ -106,7 +106,7 @@ Services
 
   This service runs a PostgreSQL 13 database inside a Docker container.
   • Image: Uses the official PostgreSQL 13 image.
-  • Container Name: postgres-container
+  • Container Name: postgres-container.
   • Exposed Ports: Internally exposes port 5432 (default PostgreSQL port).
   • Environment Variables: Loads database credentials from .env variables.
   • Volumes:
