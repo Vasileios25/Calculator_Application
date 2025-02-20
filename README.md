@@ -11,7 +11,7 @@
 
 This Python script implements a simple calculator that allows users to perform basic arithmetic operations. It keeps track of how many times each operation is performed and stores these statistics in both a CSV file and a PostgreSQL database.
 
-1. Initial Setup
+1. ## **Initial Setup **
 • The script imports necessary libraries:
   • math.pow for exponentiation (square power calculation).
   • psycopg2 for connecting to a PostgreSQL database.
